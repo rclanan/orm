@@ -31,6 +31,7 @@ class Model implements \ArrayAccess, \Iterator {
 	// protected static $_belongs_to;
 	// protected static $_has_many;
 	// protected static $_many_many;
+	// protected static $_many_through;
 
 	/**
 	 * @var  array  name or names of the primary keys
@@ -70,6 +71,7 @@ class Model implements \ArrayAccess, \Iterator {
 		'has_one'       => 'Orm\\HasOne',
 		'has_many'      => 'Orm\\HasMany',
 		'many_many'     => 'Orm\\ManyMany',
+		'many_through'  => 'Orm\\ManyThrough',
 	);
 
 	public static function factory($data = array(), $new = true)
@@ -385,6 +387,11 @@ class Model implements \ArrayAccess, \Iterator {
 
 	public static function __callStatic($method, $args)
 	{
+		if ($method == '_init')
+		{
+			return;
+		}
+
 		// Start with count_by? Get counting!
 		if (strpos($method, 'count_by') === 0)
 		{
